@@ -1,0 +1,22 @@
+FROM blipshare/vcpkg:edge
+
+ENV VCPKG_FORCE_SYSTEM_BINARIES=1
+
+# install libraries using vcpkg
+RUN /app/vcpkg/vcpkg install fmt oatpp oatpp-swagger
+
+COPY . /workspace
+USER root
+RUN chown appuser:appgroup /workspace
+
+USER appuser
+
+WORKDIR /workspace
+
+RUN mkdir -p build && \
+    cmake -B ./build -S . -GNinja -DCMAKE_CXX_COMPILER=g++ -DCMAKE_TOOLCHAIN_FILE=/app/vcpkg/scripts/buildsystems/vcpkg.cmake && \
+    cmake --build build
+
+EXPOSE 12000
+
+CMD ["/bin/sh", "-c", "./deploy/vision_service"]

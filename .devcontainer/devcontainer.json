@@ -1,0 +1,14 @@
+{
+    "name": "Robohome Vision System Processor",
+    "context": "..",
+    "dockerFile": "../Dockerfile.edge",
+    "postCreateCommand": "",
+    "runArgs": [
+        "--mount=source=.,target=/workspace,type=bind,consistency=cached",
+       "--mount=source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached,readonly"
+    ],
+    "remoteUser": "appuser",
+    "containerUser": "appuser",
+    "workspaceMount": "",
+    "workspaceFolder": "/workspace"
+}
