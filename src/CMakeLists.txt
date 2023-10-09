@@ -28,7 +28,7 @@ add_definitions(
     -DOATPP_SWAGGER_RES_PATH="${OATPP_BASE_DIR}/bin/oatpp-swagger/res"
     -DDEVELOPER_NAME="BLIPShare"
     -DDEVELOPER_URL="https://www.blipshare.com",
-    -DVS1_STREAM_URL="rtsp://alarm:alarm@192.168.0.121:8554/live"
+    -DVS1_STREAM_URL="rtsp://192.168.0.122:8554/live"
 )
 
 add_library(vision_service_lib SHARED main.cpp)
