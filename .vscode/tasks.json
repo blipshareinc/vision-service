@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Vision Service",
+            "type": "shell",
+            "command":["docker build"],
+            "args": [
+                "-f", "Dockerfile.edge",
+                ".",
+                "-t", "blipshare/vision-service:edge"
+            ]
+        },
+        {
+            "label": "Run Vision Service",
+            "type": "docker-run",
+            "isBackground": true,
+            "dockerRun": {
+                "image": "blipshare/vision-service:edge",
+                "containerName": "vision-service",
+                "portsPublishAll": true
+            }
+        }
+    ]
+}

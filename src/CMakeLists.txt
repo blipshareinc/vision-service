@@ -4,8 +4,12 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(SOURCE_FILES
     controller/controller.hpp
+    controller/robot_controller.hpp
     web/dto/status_dto.hpp
+    web/dto/robot_dto.hpp
     web/app_component.hpp
+    service/robot/robot_service.cpp
+    processor/avprocessor.cpp
 )
 
 set(VCPKG_INCLUDE_DIR ${VCPKG_DIR}/include)
@@ -14,7 +18,8 @@ set(OATPP_DIR ${VCPKG_INCLUDE_DIR}/oatpp-1.3.0)
 set(OATPP_INCLUDE_DIR ${OATPP_DIR}/oatpp/)
 set(OATPP_SWAGGER_INCLUDE_DIR ${OATPP_DIR}/oatpp-swagger/)
 set(OATPP_LIB_DIR ${VCPKG_LIB_DIR}/oatpp-1.3.0/)
-set(FMT_INCLUDE_DIR ${VCPKG__LIB_DIR}/include/fmt)
+set(FMT_INCLUDE_DIR ${VCPKG_LIB_DIR}/include/fmt)
+#set(FFMPEG_INCLUDE_DIR ${VCPKG_INCLUDE_DIR}/libavutil ${VCPKG_INCLUDE_DIR}/libavcodec ${VCPKG_INCLUDE_DIR}/libavformat)
 
 add_definitions(
     -DSERVER_NAME="localhost"
@@ -22,7 +27,8 @@ add_definitions(
     -DSERVER_PORT=12000
     -DOATPP_SWAGGER_RES_PATH="${OATPP_BASE_DIR}/bin/oatpp-swagger/res"
     -DDEVELOPER_NAME="BLIPShare"
-    -DDEVELOPER_URL="https://www.blipshare.com"
+    -DDEVELOPER_URL="https://www.blipshare.com",
+    -DVS1_STREAM_URL="rtsp://alarm:alarm@192.168.0.121:8554/live"
 )
 
 add_library(vision_service_lib SHARED main.cpp)
@@ -34,7 +40,6 @@ target_compile_options(vision_service_lib
 
 target_include_directories(vision_service_lib
     PUBLIC
-    ${FMT_INCLUDE_DIR}
     ${OATPP_INCLUDE_DIR}
     ${OATPP_SWAGGER_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -56,6 +61,14 @@ target_link_libraries(vision_service
     fmt
     oatpp::oatpp
     oatpp::oatpp-swagger
+    avcodec
+    avformat
+    avfilter
+    avdevice
+    pkgconf
+    swscale
+    swresample
+    avutil
     Threads::Threads
 )
 

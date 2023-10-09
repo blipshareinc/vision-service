@@ -2,8 +2,13 @@ FROM blipshare/vcpkg:edge
 
 ENV VCPKG_FORCE_SYSTEM_BINARIES=1
 
+USER root
+RUN apk update && apk add nasm
+
+USER appuser
+
 # install libraries using vcpkg
-RUN /app/vcpkg/vcpkg install fmt oatpp oatpp-swagger
+RUN /app/vcpkg/vcpkg install fmt oatpp oatpp-swagger ffmpeg
 
 COPY . /workspace
 USER root

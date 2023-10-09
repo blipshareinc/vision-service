@@ -1,9 +1,7 @@
 cmake_minimum_required(VERSION 3.24.1)
 project(CVService VERSION 1.0.0 LANGUAGES CXX C)
 
-set (/usr/local/lib)
-
-set(VCPKG_DIR /app/vcpkg/installed/arm-linux)
+set(VCPKG_DIR /app/vcpkg/installed/arm64-linux)
 
 find_package(fmt REQUIRED)
 find_package(Threads REQUIRED)
